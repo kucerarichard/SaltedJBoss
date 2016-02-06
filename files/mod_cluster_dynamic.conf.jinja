@@ -1,0 +1,78 @@
+# FILE: mod_cluster.conf
+#
+# DESCRIPTION:
+#
+# This file was rendered by the salt state
+# clusterbalancers.   Please see file 
+# /srv/salt/clusterbalancers.sls,
+# the jinja source template 
+# /srv/salt/files/mod_cluster_dynamic.conf.jinja
+# and the orchestration file
+# /srv/salt/orchestration/cluster1.sls
+#
+# Mod_cluster Version
+# ----------------------
+# For apache 2.2.15 (current in yum repo) the older
+# mod_cluster module binaries are used, see:
+#   /usr/local/src/mod_cluster/mod_cluster_1.2.6
+# More recent versions of apache would be compatible
+# with 1.2.11 or greater (shipped with EAP 6.4).
+# The issue is package mgmt and what the yum version
+# was compiled against, whatever it was, 2.2.15
+# spews a warning in the error log about 1.2.11.
+
+# mod_cluster
+LoadModule slotmem_module modules/mod_slotmem.so
+LoadModule manager_module modules/mod_manager.so
+LoadModule proxy_cluster_module modules/mod_proxy_cluster.so
+LoadModule advertise_module modules/mod_advertise.so
+
+# mod_proxy_balancer is incompatible with mod_cluster 
+# -----------------------------------------------------
+# A salt state will grep for this and fail if it is not 
+# commented out in main httpd.conf file.
+#LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
+
+# Manager files
+# --------------------------------------
+# Server-wide cluster mgmt files,  not vhost-based
+# The default is main log dir,  place in a subdir.
+MemManagerFile /etc/httpd/logs/mod_cluster
+
+{% for clustername, clusterprops in salt['pillar.get']('clusters', {}).iteritems() %}
+
+# Stand-Alone Mode w/ Dynamic Proxy Configuration
+<VirtualHost {{ clusterprops['balanceraddr'] }}:{{ clusterprops['balancerport'] }}>
+
+          <Location />
+          Order deny,allow
+          Deny from all
+{%- for allowedip in clusterprops['balancerallowfrom'] %}
+          Allow from {{ allowedip }}
+{%- endfor %}
+          </Location>
+
+          <Location /mod_cluster_manager>
+          SetHandler mod_cluster-manager
+          Order deny,allow
+          Deny from all
+{%- for allowedip in clusterprops['balancerallowfrom'] %}
+          Allow from {{ allowedip }}
+{%- endfor %}
+          </Location>
+
+          KeepAliveTimeout 60
+          MaxKeepAliveRequests 0
+          EnableMCPMReceive
+
+          ManagerBalancerName {{ clustername }}
+          ServerAdvertise On
+
+          AllowDisplay On
+
+          AdvertiseBindAddress 0.0.0.0:{{ clusterprops['adgroupport'] }}
+          AdvertiseGroup  {{ clusterprops['adgroupaddress'] }}:{{ clusterprops['adgroupport'] }}
+
+</VirtualHost>
+
+{% endfor %}

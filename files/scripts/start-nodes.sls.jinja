@@ -1,0 +1,9 @@
+start-{{ entityname }}:
+  salt.state.sls:
+   - tgt: {{ miniontarget }}
+   - sls: {{ entitysls }}
+   - pillar:
+       overrides:
+         {{ entityname }}:
+           status: running
+

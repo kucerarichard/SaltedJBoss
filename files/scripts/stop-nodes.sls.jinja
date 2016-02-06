@@ -1,0 +1,8 @@
+stop-{{ entityname }}:
+  salt.state.sls:
+   - tgt: {{ miniontarget }}
+   - sls: {{ entitysls }}
+   - pillar:
+       overrides:
+         {{ entityname }}:
+           status: dead

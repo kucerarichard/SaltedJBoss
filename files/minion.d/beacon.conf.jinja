@@ -1,0 +1,55 @@
+######               Beacon settings                  ######
+############################################################
+# What will be monitored:
+# - each deploy app archive
+# - each deploy app directory
+# - optional .dodeploy for exploded apps
+# NOTES:
+# - application deployment is configured in:
+#    - minion beacon settings
+#    - master event reactor conf
+#    - jinja2 conditionals
+#       - in reactor sls
+# - recursive monitoring of exploded format.
+#   - JSPs are monitored for changes and automatically
+#     synced to cluster for compilation
+#   - to just recompile bunch of copied in JSP, touch top-level dir
+#     when done copying files.
+#     - everything is rsynced to the cluster
+#     - this just compiles new JSP without redeploy
+#   - to redeploy, touch the .dodeploy file next to
+#     top-level dir
+# To deploy/redeploy app:
+#    - copy/ftp all files to new deployment archive/dir
+#      - the copy will cause immediate redeployment of archives
+#    - if new app add inotify to beacon and redeploy updated
+#      beacon.conf to minions /etc/salt/minion.d directory
+#    - if full redeploy option desired
+#      - create a webapp.war.dodeploy file next to war deploy dir
+#      - touch webapp.war.dodeploy
+#      - add beacon line item for that webapp.war.dodeploy file
+#    - touch .dodeploy file or deployment archive
+#      - if unchanged top-level dir deployment archive
+#      - or you just want to redeploy the app without changes
+# EXAMPLE:
+#  /usr/local/jboss-deployments/helloworld.war: { mask: [ attrib ], recurse: True }
+#  This example shows flattened YAML format to manage line items.
+#  After editing this file, run the following commands:
+#  > cp beacon.conf /etc/salt/minion.d/
+#  > service salt-minion restart
+
+beacons:
+  inotify:
+{%- for deploymentname, deploymentprops in salt['pillar.get']('deployments', {}).iteritems() %}
+{%-   if deploymentprops['cluster'] is defined %}
+{%-     set beacondeploydir = salt['pillar.get']('clusters')[ deploymentprops['cluster'] ]['launchdir'] %}
+{%-   else %}
+{%-     set beacondeploydir = salt['pillar.get']('nodes')[ deploymentprops['node'] ]['launchdir']  %}
+{%-   endif %}
+{%-   if deploymentprops['format'] == 'exploded' %}
+    {{ beacondeploydir }}/{{ deploymentname }}: { mask: [ attrib ], recurse: True }
+    {{ beacondeploydir }}/{{ deploymentname }}.dodeploy: { mask: [ attrib ] }
+{%-   elif deploymentprops['format'] == 'archive' %}
+    {{ beacondeploydir }}/{{ deploymentname }}: { mask: [ attrib ] }
+{%-   endif -%}
+{% endfor -%}

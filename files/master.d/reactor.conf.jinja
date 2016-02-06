@@ -1,0 +1,24 @@
+{#     
+ # Reactor event matcher/forwarder config 
+ # Driven by clusters.sls pillar.  Listens for events for overall cluster.
+ # example, matcher + handler
+ # - 'salt/beacon/*/usr/local/demo-deployments':
+ #   - /srv/reactor/demo.sls
+ # This config is deployed to salt master by the minion
+ # that runs on the master.  This is because
+ # event listening runs on the master.  The handler
+ # probably runs on the master since pillar and other
+ # data are not available in the handler file.  The
+ # handler forwards to a minion state file that runs
+ # on the minion and does the heavy lifting, i.e. has
+ # full access to pillar data.
+ #}
+reactor:
+{%- for clustername, clusterprops in salt['pillar.get']('clusters', {}).iteritems() %}
+  - 'salt/beacon/*{{ clusterprops['launchdir'] }}/*':
+    - /srv/reactor/{{ clusterprops['launchhandler'] }} {%- endfor %}
+{%- for nodename, nodeprops in salt['pillar.get']('nodes', {}).iteritems() %}
+  - 'salt/beacon/*{{ nodeprops['launchdir'] }}/*':
+    - /srv/reactor/{{ nodeprops['launchhandler'] }} {% endfor -%}
+
+
