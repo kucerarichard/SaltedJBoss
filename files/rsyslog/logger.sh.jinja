@@ -1,0 +1,1 @@
+nohup /bin/bash -c "/usr/bin/tail -f {{ path2logfile }} | /usr/bin/logger -p {{ facility }}.{{ priority }} -t {{ tag }}" </dev/null >/tmp/{{ tag }}-logger-startup.log 2>&1 &

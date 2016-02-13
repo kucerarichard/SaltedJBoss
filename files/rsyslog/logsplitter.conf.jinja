@@ -1,0 +1,37 @@
+{#
+ # logsplitter goes on the rsysloghost during orchestration.
+ # the minion for that host will match its fqdn IP against
+ # the pillar value given in rsysloghost field.
+ #
+ # all hosts in clusters and individual nodes are handled
+ # by defaults to deliver all the logs to one place.
+ #}
+{### clusternodes ###}
+{%- for clustername, clusterprops in salt['pillar.get']('clusters', {}).iteritems() %}
+{%-   if clusterprops['rsysloghost'] is defined and clusterprops['rsysloghost'] == grains[ 'fqdn_ip4' ][-1] %}
+
+:syslogtag,  contains, "{{ clustername }}" /var/log/jboss-salted/{{ clustername }}.log
+&~
+
+{%-   endif %}
+
+{%- endfor %}
+
+{### servernodes ###}
+{%- for instname, instprops in salt['pillar.get']('nodes', {}).iteritems() %}
+{%-   if instprops['rsysloghost'] is defined and instprops['rsysloghost'] == grains[ 'fqdn_ip4' ][-1] %}
+
+:syslogtag,  contains, "{{ instname }}" /var/log/jboss-salted/{{ instname }}.log
+&~
+
+{%-   endif %}
+
+{%- endfor %}
+
+{# catch-alls #}
+local3.* /var/log/jboss-salted/logger.log
+&~
+
+local0.* /var/log/jboss-salted/other.log
+&~
+
