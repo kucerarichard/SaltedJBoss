@@ -30,6 +30,16 @@ balancer_setup:
     - tgt: 'jboss-test1.zzzzz.zzzzz'
     - sls: clusterbalancers
 
+loggernode_setup:
+  salt.state:
+    - tgt: 'jboss-test1.zzzzz.zzzzz'
+    - sls: loggernodes
+
+loggerhost_setup:
+  salt.state:
+    - tgt: 'jboss-test1.zzzzz.zzzzz'
+    - sls: loggerhosts
+
 cmd.run:
   salt.function:
     - tgt: 'jboss-test1.zzzzz.zzzzz'

@@ -95,6 +95,13 @@
                 <suffix value=".yyyy-MM-dd"/>
                 <append value="true"/>
             </periodic-rotating-file-handler>
+            <syslog-handler name="SYSLOG" enabled="true">
+                 <level name="INFO"/>
+                 <hostname value="{{ grains[ 'fqdn' ] }}"/>
+                 <facility value="local-use-3"/>
+                 <server-address value="{{ clusterprops['rsysloghost'] }}"/>
+                 <formatter><syslog-format syslog-type="RFC3164"/></formatter>
+            </syslog-handler>
             <logger category="com.arjuna">
                 <level name="WARN"/>
             </logger>
@@ -117,6 +124,7 @@
                 <level name="DEBUG"/>
                 <handlers>
                     <handler name="CONSOLE"/>
+                    <handler name="SYSLOG"/>
                     <handler name="FILE"/>
                 </handlers>
             </root-logger>

@@ -60,7 +60,8 @@ stop-testnode01:
                    portoffset=poffsetval,
                    jbossconfig=jbcfgval,  
                    enableinstance=enableval,
-                   status=statusval
+                   status=statusval,
+                   clusterprops=instprops
                   ) }}
 
 {% endfor %}

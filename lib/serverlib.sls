@@ -33,7 +33,7 @@ to generate the server instances.
 {% set globalJbosshome = [] %}
 {% set globalInstancehome = [] %}
 
-{% macro serverinstance(instancehome,jbosshome,bindaddress='0.0.0.0',maddress='230.0.0.4',bmanagement='127.0.0.1',portoffset=False,jbossconfig='standalone-ha.xml',enableinstance=True,status='running') -%}
+{% macro serverinstance(instancehome,jbosshome,bindaddress='0.0.0.0',maddress='230.0.0.4',bmanagement='127.0.0.1',portoffset=False,jbossconfig='standalone-ha.xml',enableinstance=True,status='running',clusterprops=False) -%}
 
 {# Using an array to change values had to be done due to limitations of Jinja2 #}
 {# be sure to get the current value by using [-1] for last element of array #}
@@ -43,7 +43,7 @@ to generate the server instances.
 {{ instancedirs( instancehome ) }}
 
 {{ jinjacfgfile('logging.properties',serverlogpath=jbosshome+'/'+instancehome+'/log/server.log') }}
-{{ jinjacfgfile( jbossconfig ) }}
+{{ jinjacfgfile( jbossconfig, clusterprops=clusterprops ) }}
 {{ jinjacfgfile('application-roles.properties') }}
 {{ jinjacfgfile('application-users.properties') }}
 {{ jinjacfgfile('mgmt-groups.properties') }}
@@ -72,7 +72,7 @@ jboss-as-{{ instancehome }}.sh:
 
 {%- endmacro %}
 
-{% macro jinjacfgfile(cfgfilename,instancehome=False,serverlogpath=False) -%}
+{% macro jinjacfgfile(cfgfilename,instancehome=False,serverlogpath=False,clusterprops=False) -%}
 {% if not instancehome %}
 {% set instancehome = globalInstancehome[-1] %}
 {% endif %}
@@ -86,6 +86,7 @@ jboss-as-{{ instancehome }}.sh:
     - mode: 644
     - defaults:
         servernodename: {{ instancehome }}
+        clusterprops: {{ clusterprops }}
 {%- if serverlogpath %}
         serverlogpath: {{ serverlogpath }}
 {% endif -%}

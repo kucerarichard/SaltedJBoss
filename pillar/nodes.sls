@@ -12,6 +12,7 @@ nodes:
     launchhost: jboss-test1.zzzzz.zzzzz
     launchdir: /usr/local/testnode01-deployments
     launchhandler: jboss-deploy.sls
+    rsysloghost: 123.45.67.12
   testnode02:
     bmanagement: 0.0.0.0
     portoffset: 200
@@ -25,3 +26,4 @@ nodes:
     launchhost: jboss-test1.zzzzz.zzzzz
     launchdir: /usr/local/testnode02-deployments
     launchhandler: jboss-deploy.sls
+    rsysloghost: 123.45.67.12
