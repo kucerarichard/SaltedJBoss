@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if test $# -lt 1 ; then
+echo 'usage: command-{{ clustername }}.sh <module.command> [args]'
+echo 'e.g. ./command-{{ clustername }}.sh jboss7.list_deployments'
+echo 'e.g. ./command-{{ clustername }}.sh jboss7.reload'
+echo 'e.g. ./command-{{ clustername }}.sh jboss7.status'
+echo 'e.g. ./command-{{ clustername }}.sh jboss7.stop_server'
+echo 'e.g. ./command-{{ clustername }}.sh jboss7.read_datasource [name]'
+echo 'e.g. ./command-{{ clustername }}.sh jboss7.read_simple_binding [name]'
+echo "e.g. ./command-{{ clustername }}.sh jboss7_cli.run_command 'help --commands'"
+exit 1
+fi
+
+{% for instname, instprops in clusterprops['nodes'].iteritems() %}
+
+if test $# -lt 2 ; then
+
+salt-call $1 '{"cli_path": "{{ clusterprops['jbosshome'] }}/bin/jboss-cli.sh", "controller": "127.0.0.1:{{ 9999 + instprops['portoffset'] }}", "cli_user": "{{ pillar['cli_user'] }}", "cli_password": "{{ pillar['cli_password'] }}"}' 
+
+else
+
+salt-call $1 '{"cli_path": "{{ clusterprops['jbosshome'] }}/bin/jboss-cli.sh", "controller": "127.0.0.1:{{ 9999 + instprops['portoffset'] }}", "cli_user": "{{ pillar['cli_user'] }}", "cli_password": "{{ pillar['cli_password'] }}"}' "$2" $3 $4 $5
+
+fi
+
+{% endfor %}

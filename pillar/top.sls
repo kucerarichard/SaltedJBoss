@@ -5,3 +5,5 @@ test:
     - nodes
     - clusters
     - deployments
+    - credentials
+

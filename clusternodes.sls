@@ -87,4 +87,19 @@ start-testcluster01:
                   ) }}
 
 {% endfor %}
+
+{# install the salt-call minion component of clustercommand 
+ # in order to use jboss7 execution module on cluster minions. 
+ # #}
+{{ clusterprops['jbosshome'] }}/bin/command-{{ clustername }}-minion.sh:
+  file.managed:
+    - source: salt://files/scripts/clustercommand-minion.sh.jinja
+    - template: jinja
+    - user: jboss
+    - group: jboss
+    - mode: 750
+    - defaults:
+        clustername: {{ clustername }}
+        clusterprops: {{ clusterprops }}
+
 {% endfor %}

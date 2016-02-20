@@ -3,6 +3,11 @@ cluster_setup:
     - tgt: 'jboss-test1.zzzzz.zzzzz'
     - sls: clusternodes
 
+# cluster_control is targeted to the minion running on master
+# and is instrumented on the salt master only.
+# the miniontarget is the group of minions(hosts) that are 
+# being used to scale out at the minion level, i.e. the
+# actual cluster minions.  
 cluster_control:
   salt.state:
     - tgt: 'jboss-test1.zzzzz.zzzzz'

@@ -1,0 +1,9 @@
+if test $# -lt 2 ; then
+
+salt '{{ miniontarget }}' cmd.run "{{ clusterprops['jbosshome'] }}/bin/command-{{ clustername }}-minion.sh $1"
+
+else
+
+salt '{{ miniontarget }}' cmd.run "{{ clusterprops['jbosshome'] }}/bin/command-{{ clustername }}-minion.sh $1 '$2'"
+
+fi

@@ -20,6 +20,18 @@
     - defaults:
         entityname: {{ clustername }}
 
+{{ clusterprops['jbosshome'] }}/bin/command-{{ clustername }}.sh:
+  file.managed:
+    - source: salt://files/scripts/clustercommand-master.sh.jinja
+    - template: jinja
+    - user: jboss
+    - group: jboss
+    - mode: 750
+    - defaults:
+        clustername: {{ clustername }}
+        clusterprops: {{ clusterprops }}
+        miniontarget: {{ salt['pillar.get']('miniontarget') }}
+
 /srv/salt/orchestration/start-{{ clustername }}.sls:
   file.managed:
     - source: salt://files/scripts/start-nodes.sls.jinja
