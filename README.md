@@ -4,7 +4,7 @@ SaltStack-based JBoss Cluster Mgmt via Pillar-driven Orchestration of Standalone
 ![](architecture.png?raw=true)
 
 ## Example
-The point of SaltedJBoss is to be able to spec out a yaml outline for a cluster and have it built.
+The point of SaltedJBoss is to be able to spec out a yaml outline for all your clusters and have them configured and managed.
 ```yaml
 clusters:
   testcluster01:
