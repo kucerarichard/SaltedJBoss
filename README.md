@@ -42,3 +42,4 @@ Management of JBoss clusters is the goal.   The difference is they are composed 
 * Ease of debugging
 * Simplicity and leveraging strengths of JBoss
 * Dynamic compilation of JSPs to cluster 
+* Ergonomically feasible/programmable deployment of large, independently managed clusters on many hosts with multiple JVMs on each host
