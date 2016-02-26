@@ -43,11 +43,11 @@ Management of JBoss clusters is the goal.   The difference is they are composed 
 * Simplicity and leveraging strengths of JBoss
 * Dynamic compilation of JSPs to cluster 
 * Ergonomically feasible/programmable deployment of large, independently managed clusters on many hosts/containers with multiple JVMs on each host/container(if desired)
-#### All file-based vs Salt JBoss7 Modules
+#### File-based configuration vs Salt JBoss7 Modules
 * State and Execution modules for JBoss are available in saltstack.
-..* The JBoss7 Execution module is incorporated in SaltedJBoss
-..* The JBoss7 State modules are not currently used.
+* The JBoss7 Execution module is incorporated in SaltedJBoss
+* The JBoss7 State modules are not currently used.
 * JBoss has excellent support for file-based configuration so it is not necessary,  or even possible,  to channel all the config needed to build a cluster through the CLI.
-..* This gives external management systems such as salt great access to JBoss for building servers.
+* This gives external management systems such as salt great access to JBoss for building servers.
 * The jboss7 and jboss7_cli execution modules are used for convenient functions such as "reload" the CLI functions are called from a generated command script which calls all the minions which form the cluster with the command.
-..* The script uses a salt-call approach (remote execution of jboss7 module as a command directly on the minion) in order to be able to pass dynamic parameters to the command while on the master (that would otherwise be more cumbersome with a state file).
+* The script uses a salt-call approach (remote execution of jboss7 module as a command directly on the minion) in order to be able to pass dynamic parameters to the command while on the master (that would otherwise be more cumbersome with a state file).
