@@ -35,14 +35,17 @@ clusters:
         portoffset: 600
 ```
 ## Features
+
 ### JBoss Cluster
 Management of JBoss clusters is the goal.   The difference is they are composed with standalone configuration rather than domain management or JBossON support.  
+
 #### A standalone configuration has some advantages over domain mgmt and JON-based mgmt:
 * Deployment scanner support
 * Ease of debugging
 * Simplicity and leveraging strengths of JBoss
 * Dynamic compilation of JSPs to cluster 
 * Ergonomically feasible/programmable deployment of large, independently managed clusters on many hosts/containers with multiple JVMs on each host/container(if desired)
+
 #### File-based configuration vs Salt JBoss7 Modules
 * State and Execution modules for JBoss are available in saltstack.
 * The JBoss7 Execution module is incorporated in SaltedJBoss
