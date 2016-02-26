@@ -37,7 +37,7 @@ clusters:
 ## Features
 ### JBoss Cluster
 Management of JBoss clusters is the goal.   The difference is they are composed with standalone configuration rather than domain management or JBossON support.  
-### A standalone configuration has some advantages over domain mgmt and JON-based mgmt:
+#### A standalone configuration has some advantages over domain mgmt and JON-based mgmt:
 * Deployment scanner support
 * Ease of debugging
 * Simplicity and leveraging strengths of JBoss
