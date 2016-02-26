@@ -54,3 +54,15 @@ Management of JBoss clusters is the goal.   The difference is they are composed 
 * This gives external management systems such as salt great access to JBoss for building servers.
 * The jboss7 and jboss7_cli execution modules are used for convenient functions such as "reload" the CLI functions are called from a generated command script which calls all the minions which form the cluster with the command.
 * The script uses a salt-call approach (remote execution of jboss7 module as a command directly on the minion) in order to be able to pass dynamic parameters to the command while on the master (that would otherwise be more cumbersome with a state file).
+```
+[root@jboss-test1 bin]# ./command-testcluster01.sh
+jboss-test1.xxxxx.xxxxx:
+    usage: command-testcluster01.sh <module.command> [args]
+    e.g. ./command-testcluster01.sh jboss7.list_deployments
+    e.g. ./command-testcluster01.sh jboss7.reload
+    e.g. ./command-testcluster01.sh jboss7.status
+    e.g. ./command-testcluster01.sh jboss7.stop_server
+    e.g. ./command-testcluster01.sh jboss7.read_datasource [name]
+    e.g. ./command-testcluster01.sh jboss7.read_simple_binding [name]
+    e.g. ./command-testcluster01.sh jboss7_cli.run_command 'help --commands'
+```
