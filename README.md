@@ -40,6 +40,5 @@ Management of JBoss clusters is the goal.   The difference is they are composed 
 ### A standalone configuration has some advantages over domain mgmt and JON-based mgmt:
 * Deployment scanner support
 * Ease of debugging
-** Domain mgmt nodes are reportedly difficult to debug
 * Simplicity and leveraging strengths of JBoss
 * Dynamic compilation of JSPs to cluster 
