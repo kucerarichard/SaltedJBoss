@@ -57,7 +57,7 @@ if [ -z "$JBOSS_CONFIG" ]; then
   JBOSS_CONFIG={{ jbossconfig }}
 fi
 
-JBOSS_SCRIPT="$JBOSS_HOME/bin/standalone.sh -Djboss.node.name={{ instancename }} -Djboss.server.base.dir={{ jbosshome }}/{{ instancename }} -b {{ instanceipaddress }} -bmanagement {{ mgmtipaddress }} {% if multicastaddress is defined %}  -u {{ multicastaddress }} {% endif %} {% if portoffset is defined %}  -Djboss.socket.binding.port-offset={{ portoffset }}  {% endif %}" 
+JBOSS_SCRIPT="$JBOSS_HOME/bin/standalone.sh -Djboss.node.name={{ grains['id'] }}-{{ instancename }} -Djboss.server.base.dir={{ jbosshome }}/{{ instancename }} -b {{ instanceipaddress }} -bmanagement {{ mgmtipaddress }} {% if multicastaddress is defined %}  -u {{ multicastaddress }} {% endif %} {% if portoffset is defined %}  -Djboss.socket.binding.port-offset={{ portoffset }}  {% endif %}" 
 
 
 prog='jboss-as-{{ instancename }}'
