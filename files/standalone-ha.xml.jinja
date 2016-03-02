@@ -260,13 +260,15 @@
                     <locking isolation="REPEATABLE_READ"/>
                 </replicated-cache>
             </cache-container>
-            <cache-container name="web" aliases="standard-session-cache" default-cache="repl" module="org.jboss.as.clustering.web.infinispan">
+            {%- set webprops = clusterprops['cache']['web'] %}
+            <cache-container name="web" aliases="standard-session-cache" default-cache="{{ webprops['strategy'] }}" module="org.jboss.as.clustering.web.infinispan">
+            <!-- default out of the box policy is "repl" -->
                 <transport lock-timeout="60000"/>
                 <replicated-cache name="repl" mode="ASYNC" batching="true">
                     <file-store/>
                 </replicated-cache>
                 <replicated-cache name="sso" mode="SYNC" batching="true"/>
-                <distributed-cache name="dist" mode="ASYNC" batching="true" l1-lifespan="0">
+                <distributed-cache name="dist" mode="ASYNC" batching="true" l1-lifespan="0" owners="{{ webprops['numcopies']|default('2') }}">
                     <file-store/>
                 </distributed-cache>
             </cache-container>

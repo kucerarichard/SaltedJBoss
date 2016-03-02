@@ -19,10 +19,20 @@ clusters:
     launchdir: /usr/local/testcluster01-deployments
     launchhandler: jboss-deploy.sls
     jbosshome: /usr/local/jboss-eap-6.4
-    rsysloghost: 123.45.67.12
+    rsysloghost: 123.45.67.89
+    cache:
+       web:
+         strategy: repl
+#         strategy: dist
+#         numcopies: 3
     nodes:
       clusternode01:
         portoffset: 500
       clusternode02:
         portoffset: 600
+      clusternode03:
+        portoffset: 700
+      clusternode04:
+        portoffset: 800
+
 
