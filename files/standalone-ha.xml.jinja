@@ -261,7 +261,7 @@
                 </replicated-cache>
             </cache-container>
             {%- set webprops = clusterprops['cache']['web'] %}
-            <cache-container name="web" aliases="standard-session-cache" default-cache="{{ webprops['strategy'] }}" module="org.jboss.as.clustering.web.infinispan">
+            <cache-container name="web" aliases="standard-session-cache" default-cache="{{ webprops['defaultstrategy'] }}" module="org.jboss.as.clustering.web.infinispan">
             <!-- default out of the box policy is "repl" -->
                 <transport lock-timeout="60000"/>
                 <replicated-cache name="repl" mode="ASYNC" batching="true">
@@ -288,13 +288,18 @@
                     <file-store/>
                 </distributed-cache>
             </cache-container>
-            <cache-container name="hibernate" default-cache="local-query" module="org.jboss.as.jpa.hibernate:4">
+             {%- set hiberprops = clusterprops['cache']['hibernate'] %}
+            <cache-container name="hibernate" default-cache="{{ hiberprops['defaultstrategy']|default('local-query') }}" module="org.jboss.as.jpa.hibernate:4">
+             <!-- default out of the box policy is "local-query" -->
                 <transport lock-timeout="60000"/>
                 <local-cache name="local-query">
                     <transaction mode="NONE"/>
                     <eviction strategy="LRU" max-entries="10000"/>
                     <expiration max-idle="100000"/>
                 </local-cache>
+                <replicated-cache name="replicated-cache" mode="SYNC">
+                    <locking isolation="REPEATABLE_READ"/>
+                </replicated-cache>
                 <invalidation-cache name="entity" mode="SYNC">
                     <transaction mode="NON_XA"/>
                     <eviction strategy="LRU" max-entries="10000"/>

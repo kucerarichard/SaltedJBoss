@@ -22,9 +22,12 @@ clusters:
     rsysloghost: 123.45.67.89
     cache:
        web:
-         strategy: repl
-#         strategy: dist
+         defaultstrategy: repl
+#         defaultstrategy: dist
 #         numcopies: 3
+       hibernate:
+         defaultstrategy: local-query 
+#         defaultstrategy: replicated-cache 
     nodes:
       clusternode01:
         portoffset: 500
