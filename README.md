@@ -78,3 +78,5 @@ jboss-test1.xxxxx.xxxxx:
     e.g. ./command-testcluster01.sh jboss7.read_simple_binding [name]
     e.g. ./command-testcluster01.sh jboss7_cli.run_command 'help --commands'
 ```
+
+To be continued...
