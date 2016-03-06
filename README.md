@@ -82,9 +82,8 @@ jboss-test1.xxxxx.xxxxx:
 ## Notes
 
 * When adding a member to the balancer
-** The cluster needs to be restarted to "let go" of the multicast group in order to accept a new httpd balancer advertizer (to join the cluster)
-** eventually the receiver stops recording all advertizer balancer pings on other hosts,  but they all remain joined on cluster
-*** this could mean there is a period of cluster registration at startup time that ends
-*** have to test that theory
-** this should not affect the backend jbosses joining an existing cluster of httpd advertizers
-*** seems to only affect the advertizers on the balancer side
+  * The cluster needs to be restarted to "let go" of the multicast group in order to accept a new httpd balancer advertizer (to join the cluster)
+  * eventually the receiver stops recording all advertizer balancer pings on other hosts,  but they all remain joined on cluster
+     * this could mean there is a period of cluster registration at startup time that ends. have to test that theory
+  * this should not affect the backend jbosses joining an existing cluster of httpd advertizers
+     * seems to only affect the advertizers on the balancer side
