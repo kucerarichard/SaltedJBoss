@@ -79,6 +79,20 @@ jboss-test1.xxxxx.xxxxx:
     e.g. ./command-testcluster01.sh jboss7_cli.run_command 'help --commands'
 ```
 
+## Setup
+
+Prerequisites.  You need to manually install the following:
+* Provision hosts/containers.  Decide how coarse-grained the hosts depending on requirements or other factors.
+  * The cluster will scale out both within the host (to consume RAM with multiple JVMs) and along the minion axis (multiple jboss hosts)
+* Install Salt Master/Minions
+  * Put a minion on every JBoss host
+  * Put a minion on the salt master.
+  * Put a minion on the optional launch host (or put launch host on the salt master)
+* Install EAP 6.4 or Wildfly on all minions (hosts/containers)
+ 
+## Build a cluster
+*
+
 ## Notes
 
 * When adding a member to the balancer
