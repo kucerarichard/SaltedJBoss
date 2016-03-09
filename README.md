@@ -79,7 +79,7 @@ jboss-test1.xxxxx.xxxxx:
     e.g. ./command-testcluster01.sh jboss7_cli.run_command 'help --commands'
 ```
 
-## Setup
+## Setup hosts/containers, salt master/minions and eap/wildfly
 
 Prerequisites.  You need to manually install the following:
 * Provision hosts/containers.  Decide how coarse-grained the hosts depending on requirements or other factors.
@@ -92,6 +92,57 @@ Prerequisites.  You need to manually install the following:
  
 ## Build a cluster
 *
+
+## Query a cluster
+
+* Two ways to find out what datasources are deployed and where
+   * a summary for each minion 
+```
+# command-testcluster01.sh jboss7_cli.run_command '/subsystem=datasources:read-resource'
+... many minions report back...
+{
+    "outcome" => "success",
+    "result" => {
+        "xa-data-source" => undefined,
+        "data-source" => {
+            "ExampleDS" => undefined,
+            "MySQLPool" => undefined
+        },
+        "jdbc-driver" => {
+            "h2" => undefined,
+            "mysql" => undefined
+        }
+    }
+}
+```
+   * specific detail for every datasource
+```
+# for i in `salt-call pillar.keys datasources | grep '-' | sed 's/-//'`; do command-testcluster01.sh jboss7.read_datasource $i; done
+... many minions report back ...
+            url-delimiter:
+                None
+            url-selector-strategy-class-name:
+                None
+            use-ccm:
+                True
+            use-fast-fail:
+                False
+            use-java-context:
+                True
+            use-try-lock:
+                None
+            user-name:
+                mydatasource
+            valid-connection-checker-class-name:
+                None
+            valid-connection-checker-properties:
+                None
+            validate-on-match:
+                False
+        success:
+            True
+... blah blah blah a lot of detail, go get a cup of coffee -- later use jobs.lookup_jid | less to review
+```
 
 ## Notes
 
