@@ -32,6 +32,16 @@
         clusterprops: {{ clusterprops }}
         miniontarget: {{ salt['pillar.get']('miniontarget') }}
 
+{{ clusterprops['jbosshome'] }}/bin/list-datasources-{{ clustername }}.sh:
+  file.managed:
+    - source: salt://files/scripts/list-datasources.sh.jinja
+    - template: jinja
+    - user: jboss
+    - group: jboss
+    - mode: 750
+    - defaults:
+        clustername: {{ clustername }}
+
 /srv/salt/orchestration/start-{{ clustername }}.sls:
   file.managed:
     - source: salt://files/scripts/start-nodes.sls.jinja
