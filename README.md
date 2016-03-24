@@ -84,6 +84,7 @@ jboss-test1.xxxxx.xxxxx:
 Prerequisites.  You need to manually install the following:
 * Provision hosts/containers.  Decide how coarse-grained the hosts depending on requirements or other factors.
   * The cluster will scale out both within the host (to consume RAM with multiple JVMs) and along the minion axis (multiple jboss hosts)
+  * You can put multiple Salt minions on a host provided you can get them working with their own IDs and own /etc/salt/minion directory, and test that they don't interfere with each other's operation.  Each minion can then shadow a cluster or group of clusters (each minion would get its own pillar data).  The cluster.sls file can already accomodate multiple clusters and can be managed with one minion.  Multiple minions on the same host is just yet another config option,  that would be best to manage with salt itself (a main host minion would manage the per-service minions).  But,  don't do this.
 * Install Salt Master/Minions
   * Put a minion on every JBoss host
   * Put a minion on the salt master.
