@@ -1,7 +1,7 @@
 cluster_setup:
   salt.state:
     - tgt: 'jboss-test1.zzzzz.zzzzz'
-    - sls: clusternodes
+    - sls: cluster.nodes
 
 # cluster_control is targeted to the minion running on master
 # and is instrumented on the salt master only.
@@ -11,39 +11,39 @@ cluster_setup:
 cluster_control:
   salt.state:
     - tgt: 'jboss-test1.zzzzz.zzzzz'
-    - sls: clustercontrol
+    - sls: cluster.control
     - pillar:
         miniontarget: 'jboss-test1.zzzzz.zzzzz'
     
 launchdir_setup:
   salt.state:
     - tgt: 'jboss-test1.zzzzz.zzzzz'
-    - sls: deploymentlaunchdirs
+    - sls: deployment.launchdirs
 
 reactor_setup:
   salt.state:
     - tgt: 'jboss-test1.zzzzz.zzzzz'
-    - sls: deploymentreactors
+    - sls: deployment.reactors
 
 beacon_setup:
   salt.state:
     - tgt: 'jboss-test1.zzzzz.zzzzz'
-    - sls: deploymentbeacons
+    - sls: deployment.beacons
 
 balancer_setup:
   salt.state:
     - tgt: 'jboss-test1.zzzzz.zzzzz'
-    - sls: clusterbalancers
+    - sls: cluster.balancers
 
 loggernode_setup:
   salt.state:
     - tgt: 'jboss-test1.zzzzz.zzzzz'
-    - sls: loggernodes
+    - sls: logger.nodes
 
 loggerhost_setup:
   salt.state:
     - tgt: 'jboss-test1.zzzzz.zzzzz'
-    - sls: loggerhosts
+    - sls: logger.hosts
 
 cmd.run:
   salt.function:

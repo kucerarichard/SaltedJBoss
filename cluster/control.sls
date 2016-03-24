@@ -50,7 +50,7 @@
     - defaults:
         entityname: {{ clustername }}
         miniontarget: {{ salt['pillar.get']('miniontarget') }}
-        entitysls: clusternodes
+        entitysls: cluster.nodes
 
 /srv/salt/orchestration/stop-{{ clustername }}.sls:
   file.managed:
@@ -60,6 +60,6 @@
     - defaults:
         entityname: {{ clustername }}
         miniontarget: {{ salt['pillar.get']('miniontarget') }}
-        entitysls: clusternodes
+        entitysls: cluster.nodes
 
 {% endfor %}

@@ -140,8 +140,9 @@
 {#- LOGIC:
    This file, which goes with an instance of a "node",  needs to determine 
    what datasources need to be rendered for the passed in servernodename #}
-
-{%- for deploymentname, deploymentprops in salt['pillar.get']('deployments', {}).iteritems() %}
+{%- set gotdeployments =  salt['pillar.get']('deployments') %}
+{%- if gotdeployments is defined and gotdeployments %}
+{%- for deploymentname, deploymentprops in gotdeployments.iteritems() %}
 {%-   if deploymentprops['format'] == "datasource" %}
 {%-      set deployit = [ False ] %}
 {%-      if deploymentprops['node'] is defined and deploymentprops['node'] == servernodename %}
@@ -193,6 +194,7 @@
                 </datasource>
 {%-   endif %}
 {%- endfor %}
+{%- endif %}
                 <drivers>
 {%- for drivermodule, driverdecls in salt['pillar.get']('drivers', {}).iteritems() %}
                 {%- for drivername, driverprops in driverdecls.iteritems() %}
@@ -493,7 +495,9 @@
  #
  #}
 {%-  set myclusterinfo = [ False ] %}
-{%-  for clustername, clusterprops in salt['pillar.get']('clusters').iteritems() %}
+{%-  set gotclusters = salt['pillar.get']('clusters') %}
+{%-  if gotclusters is defined and gotclusters %}
+{%-  for clustername, clusterprops in gotclusters.iteritems() %}
 {%-    for instname, instprops in clusterprops['nodes'].iteritems() %}
 {%-      if instname == servernodename %}
 {%-        if myclusterinfo.append( clustername ) %}{% endif %}
@@ -503,6 +507,7 @@
 {%-      endif %}
 {%-    endfor %}
 {%-  endfor %}
+{%-  endif %}
 {%-  if myclusterinfo[-1] != False %}
         <socket-binding name="modcluster" port="0" multicast-address="{{ myclusterinfo[-2] }}" multicast-port="{{ myclusterinfo[-1] }}"/>
 {%-  else %}

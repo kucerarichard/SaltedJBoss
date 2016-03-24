@@ -141,7 +141,7 @@ Prerequisites.  You need to manually install the following:
                 False
         success:
             True
-... blah blah blah a lot of detail, go get a cup of coffee -- later use jobs.lookup_jid | less to review
+... a lot of detail ... later use jobs.lookup_jid | less to review
 ```
 
 ## Notes

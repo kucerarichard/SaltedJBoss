@@ -9,7 +9,7 @@ deploy_app:
   local.state.sls:
    - tgt: jboss-test1.xxxxx.xxxxx
    - arg:
-      - deploymentlaunchers
+      - deployment.launchers
    - kwarg:
        pillar:
          deploy_src_path: {{ data['data']['path'] }} 
