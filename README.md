@@ -145,6 +145,41 @@ Prerequisites.  You need to manually install the following:
 ... a lot of detail ... later use jobs.lookup_jid | less to review
 ```
 
+## Dynamic Pillars
+ 
+It should be possible to add flexibility in the Pillar by writing code in it:
+
+``` 
+clusters:
+  testcluster01:
+    bmanagement: 0.0.0.0
+    enableinstance: True
+    status: running
+    maddress: 230.0.0.11
+    balanceraddr: '*'
+    balancerport: 80
+    balancerallowfrom:
+      - 123.34.56
+      - 124.56.78
+      - 123.34.23
+    adgroupaddress: 224.0.1.106
+    adgroupport: 23364
+{% if grain == dev or whatever %}
+    jspconfig:
+      dev: 'true'
+      checkinterval: 5
+{% endif %}
+    launchhost: jboss-test1.zzzzz.zzzzz
+    launchdir: /usr/local/testcluster01-deployments
+    launchhandler: jboss-deploy.sls
+    jbosshome: /usr/local/jboss-eap-6.4
+    nodes:
+{% for 10 .. 30 %}
+      clusternode{{ i }}:
+        portoffset: {{ i }}00
+{% endfor %}
+```
+
 ## Notes
 
 * When adding a member to the balancer
