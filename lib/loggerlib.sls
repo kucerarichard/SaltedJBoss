@@ -1,6 +1,6 @@
 {#
  # simple logging via logger command
- # direct-to-syslog logging will be put in later in the server config.
+ # direct-to-syslog logging is done in the server xml config.
  #}
 {% macro loggerbundle(path2logfile,facility,priority,tag) -%}
 /opt/logger.local/{{ tag }}-logger.sh:

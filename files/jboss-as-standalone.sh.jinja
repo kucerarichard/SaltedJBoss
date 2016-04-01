@@ -17,18 +17,15 @@ export JAVA_HOME
 
 # Load JBoss AS init.d configuration.
 if [ -z "$JBOSS_CONF" ]; then
-  JBOSS_CONF="/etc/jboss-as/jboss-as.conf"
+  JBOSS_CONF="/etc/jboss-as/jboss-as-{{ instancename }}.conf"
 fi
 
 [ -r "$JBOSS_CONF" ] && . "${JBOSS_CONF}"
 
 # Set defaults.
-# SaltedJBoss -- some loose ends here.. fix later.
-# - get jboss-as.conf under control
-# - multiple jboss homes per host/container (multiple versions)
 
-# SaltedJBoss -- set CWD to bin directory to pick up on legacy property files.
-# The minion can put the legacy prop files ./bin during orchestration.
+# SaltedJBoss -- set CWD to bin directory to pick up on legacy app property files.
+# The minion can put the legacy app prop files ./bin during orchestration.
 cd {{ jbosshome }}/bin
 
 if [ -z "$JBOSS_HOME" ]; then

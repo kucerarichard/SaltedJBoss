@@ -39,6 +39,14 @@ LoadModule advertise_module modules/mod_advertise.so
 # The default is main log dir,  place in a subdir.
 MemManagerFile /etc/httpd/logs/mod_cluster
 
+# Maxhost setting for JBoss Alias-es
+# -----------------------------------------
+# The default setting of Maxhost is 20, and the affected parts to 
+# the virtual-server Alias setting is part of the JBoss Web subsystem settings 
+# Increase this number if you see "MEM: Can't update or insert host alias".
+# Or reduce number of Alias-es in JBoss Web Subsystem
+Maxhost 50
+
 {% for clustername, clusterprops in salt['pillar.get']('clusters', {}).iteritems() %}
 
 # Stand-Alone Mode w/ Dynamic Proxy Configuration

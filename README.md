@@ -89,6 +89,9 @@ Prerequisites.  You need to manually install the following:
   * Put a minion on every JBoss host
   * Put a minion on the salt master.
   * Put a minion on the optional launch host (or put launch host on the salt master)
+    * it's a good practice to put launch host on salt master because the
+	manual failsafe (do-deploy.sh scripts for each app deployment) for the failure 
+	of salt beacon/reactor system depends on being on salt master.
 * Install EAP 6.4 or Wildfly on all minions (hosts/containers)
  
 ## Build a cluster

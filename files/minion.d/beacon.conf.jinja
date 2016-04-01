@@ -38,9 +38,11 @@
 #  > cp beacon.conf /etc/salt/minion.d/
 #  > service salt-minion restart
 
+{%- set gotdeployments =  salt['pillar.get']('deployments') %}
+{%- if gotdeployments is defined and gotdeployments %}
 beacons:
   inotify:
-{%- for deploymentname, deploymentprops in salt['pillar.get']('deployments', {}).iteritems() %}
+{%- for deploymentname, deploymentprops in gotdeployments.iteritems() %}
 {%-   if deploymentprops['cluster'] is defined %}
 {%-     set beacondeploydir = salt['pillar.get']('clusters')[ deploymentprops['cluster'] ]['launchdir'] %}
 {%-   else %}
@@ -53,3 +55,4 @@ beacons:
     {{ beacondeploydir }}/{{ deploymentname }}: { mask: [ attrib ] }
 {%-   endif -%}
 {% endfor -%}
+{%- endif %}

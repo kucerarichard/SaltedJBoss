@@ -13,12 +13,13 @@
  # on the minion and does the heavy lifting, i.e. has
  # full access to pillar data.
  #}
+{%- set gotclusters =  salt['pillar.get']('clusters') %}
+{%- if gotclusters is defined and gotclusters %}
 reactor:
-{%- for clustername, clusterprops in salt['pillar.get']('clusters', {}).iteritems() %}
+{%- for clustername, clusterprops in gotclusters.iteritems() %}
   - 'salt/beacon/*{{ clusterprops['launchdir'] }}/*':
     - /srv/reactor/{{ clusterprops['launchhandler'] }} {%- endfor %}
 {%- for nodename, nodeprops in salt['pillar.get']('nodes', {}).iteritems() %}
   - 'salt/beacon/*{{ nodeprops['launchdir'] }}/*':
     - /srv/reactor/{{ nodeprops['launchhandler'] }} {% endfor -%}
-
-
+{%- endif %}

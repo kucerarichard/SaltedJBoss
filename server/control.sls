@@ -26,7 +26,7 @@
     - defaults:
         entityname: {{ nodename }}
         miniontarget: {{ miniontarget }}
-        entitysls: servernodes
+        entitysls: server.nodes
 
 /srv/salt/orchestration/stop-{{ nodename }}.sls:
   file.managed:
@@ -36,5 +36,5 @@
     - defaults:
         entityname: {{ nodename }}
         miniontarget: {{ miniontarget }}
-        entitysls: servernodes
+        entitysls: server.nodes
 

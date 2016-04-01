@@ -49,6 +49,25 @@ to generate the server instances.
 {{ jinjacfgfile('mgmt-groups.properties') }}
 {{ jinjacfgfile('mgmt-users.properties') }}
 
+{{ jbosshome }}/bin/standalone-{{ instancehome }}.conf:
+  file.managed:
+    - source: salt://files/jboss-as-standalone.conf.jinja
+    - template: jinja
+    - mode: 755
+    - defaults:
+        instancename: {{ instancehome }}
+        jbosshome: {{ jbosshome }}
+        clusterprops: {{ clusterprops }}
+
+/etc/jboss-as/jboss-as-{{ instancehome }}.conf:
+  file.managed:
+    - source: salt://files/jboss-as-etc.conf.jinja
+    - template: jinja
+    - mode: 755
+    - defaults:
+        instancename: {{ instancehome }}
+        jbosshome: {{ jbosshome }}
+
 /etc/init.d/jboss-as-{{ instancehome }}.sh:
   file.managed:
     - source: salt://files/jboss-as-standalone.sh.jinja

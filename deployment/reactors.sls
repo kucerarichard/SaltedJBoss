@@ -2,4 +2,5 @@
   file.managed:
     - source: salt://files/master.d/reactor.conf.jinja
     - template: jinja
+    - makedirs: True
 

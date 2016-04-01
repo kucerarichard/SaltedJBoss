@@ -3,7 +3,8 @@ clusters:
     bmanagement: 0.0.0.0
     enableinstance: True
     status: running
-    maddress: 230.0.0.11
+#    status: dead
+    maddress: 230.x.x.xx
     balanceraddr: '*'
     balancerport: 80
     balancerallowfrom:
@@ -19,7 +20,8 @@ clusters:
     launchdir: /usr/local/testcluster01-deployments
     launchhandler: jboss-deploy.sls
     jbosshome: /usr/local/jboss-eap-6.4
-    rsysloghost: 123.45.67.89
+    rsysloghost: 172.xx.xx.xx
+    heapsettings: -Xms2048m -Xmx2048m -XX:MaxPermSize=256m
     cache:
        web:
          defaultstrategy: repl
@@ -29,13 +31,7 @@ clusters:
          defaultstrategy: local-query 
 #         defaultstrategy: replicated-cache 
     nodes:
-      clusternode01:
-        portoffset: 500
-      clusternode02:
-        portoffset: 600
-      clusternode03:
-        portoffset: 700
-      clusternode04:
-        portoffset: 800
-
-
+{%- for n in range(1,5) %}
+      clusternode0{{n}}:
+        portoffset: {{n}}00
+{%- endfor %}

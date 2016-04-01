@@ -1,0 +1,2 @@
+# use this script to deploy manually in case of beacon/reactor failure
+salt '{{ miniontarget }}' state.sls deployment.launchers pillar='{ deploy_src_path: {{ sourcepath }} }' 
