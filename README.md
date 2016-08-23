@@ -1,5 +1,8 @@
 # SaltedJBoss
 SaltStack-based JBoss Cluster Mgmt via Pillar-driven Orchestration of Standalone Servers.
+
+Example of Predictive Orchestration with Salt (a.k.a. glue) (it's worth noting that using Salt to make JBoss go back to the way it was was the wrong thing to build...)
+
 ## Architecture
 ![](architecture.png?raw=true)
 
