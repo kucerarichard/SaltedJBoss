@@ -99,7 +99,8 @@ Prerequisites.  You need to manually install the following:
 * RHQ/JBossON.  Auto-discover and manage all your nodes after they're built out with Salt.  Two ways to manage things is a good idea.  Different tools have different strengths/weaknesses and in case of failure of beacon system or your production python installation gets hosed,  or RHQ cassandra internals gets messed up or you lose all your agents for some reason (a rather sinking feeling).
  
 ## Build a cluster
-*
+
+* To Do
 
 ## Query a cluster
 
