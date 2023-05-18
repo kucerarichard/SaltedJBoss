@@ -5,7 +5,7 @@ Example of Predictive Orchestration with Salt (a.k.a. glue).
 
 Not sure if this thing crosses the line between the "clever use of tools" and Craptacular Command Framework.  Whatever is there is written in bash,  not javascript nor java, nor python.  It's not a command runner in Ahoy or Just or Make.  It's salt commands and templates,  which are tools,  which I learned and got some fluency in,  so,  no I don't think it crossed that line,  but other lines were crossed like perhaps it's somewhat overkill depending on your requirements.
 
-BTW who needs an API?  The salt pillar achieves with simple templating what kubernetes could not (see helm vs kustomize etc).
+The example also demonstrates how the salt pillar achieves with simple templating what kubernetes could not (see helm vs kustomize etc).
 
 ## Architecture
 ![](architecture.png?raw=true)
